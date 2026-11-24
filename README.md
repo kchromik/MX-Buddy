@@ -1,0 +1,32 @@
+# MX Buddy
+
+Native macOS-Menüleisten-App für die Logitech MX Master 3S und MX Master 4 über Bluetooth. Das Daumenrad wechselt zwischen Desktops und Vollbild-Apps. In „Belegungen öffnen“ lässt sich für jede Taste und Radrichtung eine Systemaktion oder ein eigenes Tastenkürzel wählen.
+
+## Verwenden
+
+1. Die Maus über Bluetooth mit dem Mac verbinden und MX Buddy öffnen. Das Fenster zeigt Modell und Verbindungsstatus.
+2. Über „Freigeben“ die Bedienungshilfen und die Eingabeüberwachung für MX Buddy aktivieren. Falls macOS einen Neustart der App anfordert, MX Buddy erneut öffnen.
+3. Das Menü neben einem Bedienelement öffnen. Für „Eigenes Tastenkürzel“ die gewünschte Kombination drücken. Die Einstellungen gelten sofort und werden pro Modell gespeichert.
+
+„Space nach links/rechts“ sendet ⌃←/⌃→, „Mission Control“ sendet ⌃↑. Diese Kurzbefehle müssen unter **Systemeinstellungen → Tastatur → Tastaturkurzbefehle → Mission Control** aktiviert sein. Bei eigener Systembelegung die entsprechende Kombination aufnehmen.
+
+## Tasten und Gesten
+
+Beide Modelle unterstützen Daumenrad, Hauptscrollrad, Links-, Rechts- und Mittelklick, Vor, Zurück, Gestentaste und Radmodus-Taste. Bei der MX Master 4 ist die drückbare Daumenfläche separat belegbar. Die Taste zur Gerätewahl an der Unterseite wechselt den verbundenen Host.
+
+Für die Gestentaste lassen sich ein einfacher Druck und vier Bewegungsrichtungen belegen. Sobald eine davon belegt ist, übernimmt MX Buddy die gesamte Gestentaste. Die übrigen Richtungen erscheinen als „Unbelegt“. Sobald alle fünf Einträge wieder frei sind, gibt MX Buddy die Gestentaste an das Gerät zurück.
+
+Im Menüleistensymbol lassen sich alle Belegungen pausieren. **⌃⌥⇧R** stellt systemweit das native Verhalten beider Mäuse wieder her, auch für den Linksklick. Dieser Befehl entfernt die gespeicherten Belegungen, einschließlich des voreingestellten Space-Wechsels.
+
+Wenn Logi Options+ ein Bedienelement bereits übernimmt, zeigt MX Buddy den Konflikt an. Die betreffende Belegung in Options+ freigeben und in MX Buddy „Verbindung erneut prüfen“ wählen. Direkte Bluetooth-Verbindungen sind der unterstützte Gerätepfad. Ein Bolt-Empfänger benötigt eine andere Adressierung.
+
+## Entwicklung
+
+Das Projekt benötigt macOS 14 oder neuer und Xcode mit Swift 6. Für lokale Builds auf einem anderen Mac das eigene Signaturteam wählen.
+
+```sh
+xcodebuild -scheme 'MX Buddy' -configuration Release build
+xcodebuild -scheme 'MX Buddy' -destination 'platform=macOS' test
+```
+
+IOKit erkennt die Maus und überträgt HID++-Nachrichten für Daumenrad und Sondertasten. Ein Quartz-Ereignisfilter verarbeitet reguläre Klicks und Scrollbewegungen anhand der Gerätekennung. Belegungen und Kürzel liegen lokal in UserDefaults. Die native Oberfläche verwendet Outfit und das [zentrale Branding](https://github.com/kchromik/Branding).

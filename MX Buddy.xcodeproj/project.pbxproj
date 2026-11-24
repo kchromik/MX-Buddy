@@ -1,0 +1,468 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		174F728178766A4EBC8D11A7 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A9BE3B57BD77341E6E4A4E6 /* Cocoa.framework */; };
+		1A27A148DD77C29FFBC7B126 /* MouseEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4228F86B047783AF422D8623 /* MouseEngine.swift */; };
+		1D6148632E426B8AFA481B54 /* ReportTransport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 332D47D1AD8329FDAFCCBC5A /* ReportTransport.swift */; };
+		41E702A7BBB7B658A5AE3731 /* MXBuddy.icns in Resources */ = {isa = PBXBuildFile; fileRef = 18CD44F48B3C062A7D4BA797 /* MXBuddy.icns */; };
+		536D99A9ED3ECAD6255644FD /* Mapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEEC852C814AE87F5F2644F2 /* Mapping.swift */; };
+		5CD337475F9D30E2BEE95C6D /* Outfit.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6D4FD4D4431025A6AEF71A49 /* Outfit.ttf */; };
+		772AF4739206EAE20BB613A4 /* ReportTransport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 332D47D1AD8329FDAFCCBC5A /* ReportTransport.swift */; };
+		792B1F421F01792484B2A892 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A9BE3B57BD77341E6E4A4E6 /* Cocoa.framework */; };
+		83B794B83954E45412C0FA9B /* MXBuddyApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADC6C0974356743FA1E10F57 /* MXBuddyApp.swift */; };
+		887F340BA3691201A7451221 /* LogitechSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3A3CB7C94FAA7D792D8EA6B /* LogitechSession.swift */; };
+		95023C0A4D7C88BD64EDC58F /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48A3BE4F8A0540D567F597C0 /* SettingsView.swift */; };
+		9E4AF70DD62172E28BF82FA1 /* LogitechSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3A3CB7C94FAA7D792D8EA6B /* LogitechSession.swift */; };
+		D17C8429DE6B3E053F68AC35 /* Mapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEEC852C814AE87F5F2644F2 /* Mapping.swift */; };
+		D961CFE93744B028D2374400 /* OFL.txt in Resources */ = {isa = PBXBuildFile; fileRef = CAB132CE579C3E7D070826F1 /* OFL.txt */; };
+		F5AC9746023A5DDA4E550CEF /* MouseEventRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9FADD476B6425627B1C44B0 /* MouseEventRouter.swift */; };
+		FD2FF626EFD31CDA1874A053 /* MappingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54E9F1675DFA53B31C727CE8 /* MappingTests.swift */; };
+		FE176BA0BF3EBEC60C9C26B8 /* MouseEventRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9FADD476B6425627B1C44B0 /* MouseEventRouter.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		0A9BE3B57BD77341E6E4A4E6 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.0.sdk/System/Library/Frameworks/Cocoa.framework; sourceTree = DEVELOPER_DIR; };
+		18CD44F48B3C062A7D4BA797 /* MXBuddy.icns */ = {isa = PBXFileReference; includeInIndex = 1; path = MXBuddy.icns; sourceTree = "<group>"; };
+		332D47D1AD8329FDAFCCBC5A /* ReportTransport.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ReportTransport.swift; sourceTree = "<group>"; };
+		39618DB1449B6F7A72FA72A1 /* MX Buddy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "MX Buddy.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		4228F86B047783AF422D8623 /* MouseEngine.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MouseEngine.swift; sourceTree = "<group>"; };
+		48A3BE4F8A0540D567F597C0 /* SettingsView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		54E9F1675DFA53B31C727CE8 /* MappingTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MappingTests.swift; sourceTree = "<group>"; };
+		6D4FD4D4431025A6AEF71A49 /* Outfit.ttf */ = {isa = PBXFileReference; includeInIndex = 1; path = Outfit.ttf; sourceTree = "<group>"; };
+		754DF05714046689C5601E28 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A635B9A1B65E9CCA4D71A997 /* MXBuddyTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MXBuddyTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		ADC6C0974356743FA1E10F57 /* MXBuddyApp.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MXBuddyApp.swift; sourceTree = "<group>"; };
+		AEEC852C814AE87F5F2644F2 /* Mapping.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Mapping.swift; sourceTree = "<group>"; };
+		CAB132CE579C3E7D070826F1 /* OFL.txt */ = {isa = PBXFileReference; includeInIndex = 1; path = OFL.txt; sourceTree = "<group>"; };
+		D9FADD476B6425627B1C44B0 /* MouseEventRouter.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MouseEventRouter.swift; sourceTree = "<group>"; };
+		E3A3CB7C94FAA7D792D8EA6B /* LogitechSession.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = LogitechSession.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		83F3F9CFE6371DA2235FB098 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				792B1F421F01792484B2A892 /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D3A2D11ED5D437F26320A773 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				174F728178766A4EBC8D11A7 /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		078B07D3416F1B2C9678277F /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+				54E9F1675DFA53B31C727CE8 /* MappingTests.swift */,
+			);
+			name = Tests;
+			path = Tests;
+			sourceTree = "<group>";
+		};
+		57C00A2D6BA56892E6E78F4F /* App */ = {
+			isa = PBXGroup;
+			children = (
+				E3A3CB7C94FAA7D792D8EA6B /* LogitechSession.swift */,
+				ADC6C0974356743FA1E10F57 /* MXBuddyApp.swift */,
+				AEEC852C814AE87F5F2644F2 /* Mapping.swift */,
+				4228F86B047783AF422D8623 /* MouseEngine.swift */,
+				48A3BE4F8A0540D567F597C0 /* SettingsView.swift */,
+				754DF05714046689C5601E28 /* Info.plist */,
+				D93408F0BB9E52C86DE891A7 /* Resources */,
+				332D47D1AD8329FDAFCCBC5A /* ReportTransport.swift */,
+				D9FADD476B6425627B1C44B0 /* MouseEventRouter.swift */,
+			);
+			name = App;
+			path = App;
+			sourceTree = "<group>";
+		};
+		6ED7B669DB838AA51BF6B6B4 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				BD7C272CDE13E4C91705D97A /* OS X */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		AAC26AAE40557492C35BA67E = {
+			isa = PBXGroup;
+			children = (
+				CD41759767F2F3018C16972C /* Products */,
+				6ED7B669DB838AA51BF6B6B4 /* Frameworks */,
+				57C00A2D6BA56892E6E78F4F /* App */,
+				078B07D3416F1B2C9678277F /* Tests */,
+			);
+			sourceTree = "<group>";
+		};
+		BD7C272CDE13E4C91705D97A /* OS X */ = {
+			isa = PBXGroup;
+			children = (
+				0A9BE3B57BD77341E6E4A4E6 /* Cocoa.framework */,
+			);
+			name = "OS X";
+			sourceTree = "<group>";
+		};
+		CD41759767F2F3018C16972C /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				39618DB1449B6F7A72FA72A1 /* MX Buddy.app */,
+				A635B9A1B65E9CCA4D71A997 /* MXBuddyTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		D93408F0BB9E52C86DE891A7 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				CAB132CE579C3E7D070826F1 /* OFL.txt */,
+				6D4FD4D4431025A6AEF71A49 /* Outfit.ttf */,
+				18CD44F48B3C062A7D4BA797 /* MXBuddy.icns */,
+			);
+			name = Resources;
+			path = Resources;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		07F6A29185C06426279CD12C /* MX Buddy */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 6CCB1A9203133DC233102297 /* Build configuration list for PBXNativeTarget "MX Buddy" */;
+			buildPhases = (
+				C6598BF036ECDD0A4964EAA9 /* Sources */,
+				D3A2D11ED5D437F26320A773 /* Frameworks */,
+				9BA9B833DD0BB501AC282F2A /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "MX Buddy";
+			productName = "MX Buddy";
+			productReference = 39618DB1449B6F7A72FA72A1 /* MX Buddy.app */;
+			productType = "com.apple.product-type.application";
+		};
+		94DDF90F91BDE0916F56EF19 /* MXBuddyTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 8D84698D32001EE8E2123A72 /* Build configuration list for PBXNativeTarget "MXBuddyTests" */;
+			buildPhases = (
+				B7897FEEA0289848CC8CFDEC /* Sources */,
+				83F3F9CFE6371DA2235FB098 /* Frameworks */,
+				2AFF984BFD3364538AD970A2 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = MXBuddyTests;
+			productName = MXBuddyTests;
+			productReference = A635B9A1B65E9CCA4D71A997 /* MXBuddyTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		78AA6BB13751DB0FB002136E /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 1600;
+				LastUpgradeCheck = 1600;
+			};
+			buildConfigurationList = 237C1698B36C5E6C72878FFC /* Build configuration list for PBXProject "MX Buddy" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = AAC26AAE40557492C35BA67E;
+			minimizedProjectReferenceProxies = 0;
+			preferredProjectObjectVersion = 100;
+			productRefGroup = CD41759767F2F3018C16972C /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				07F6A29185C06426279CD12C /* MX Buddy */,
+				94DDF90F91BDE0916F56EF19 /* MXBuddyTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		2AFF984BFD3364538AD970A2 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9BA9B833DD0BB501AC282F2A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D961CFE93744B028D2374400 /* OFL.txt in Resources */,
+				5CD337475F9D30E2BEE95C6D /* Outfit.ttf in Resources */,
+				41E702A7BBB7B658A5AE3731 /* MXBuddy.icns in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		B7897FEEA0289848CC8CFDEC /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FD2FF626EFD31CDA1874A053 /* MappingTests.swift in Sources */,
+				536D99A9ED3ECAD6255644FD /* Mapping.swift in Sources */,
+				9E4AF70DD62172E28BF82FA1 /* LogitechSession.swift in Sources */,
+				1D6148632E426B8AFA481B54 /* ReportTransport.swift in Sources */,
+				F5AC9746023A5DDA4E550CEF /* MouseEventRouter.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C6598BF036ECDD0A4964EAA9 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				887F340BA3691201A7451221 /* LogitechSession.swift in Sources */,
+				83B794B83954E45412C0FA9B /* MXBuddyApp.swift in Sources */,
+				D17C8429DE6B3E053F68AC35 /* Mapping.swift in Sources */,
+				1A27A148DD77C29FFBC7B126 /* MouseEngine.swift in Sources */,
+				95023C0A4D7C88BD64EDC58F /* SettingsView.swift in Sources */,
+				772AF4739206EAE20BB613A4 /* ReportTransport.swift in Sources */,
+				FE176BA0BF3EBEC60C9C26B8 /* MouseEventRouter.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		3A97D9A14BC45702E5E136F5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		60AA45BE34473C781CA3B444 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Manual;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = 7HFRDKKUCK;
+				ENABLE_HARDENED_RUNTIME = YES;
+				INFOPLIST_FILE = App/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				PRODUCT_BUNDLE_IDENTIFIER = de.kevinchromik.MXBuddy;
+				SDKROOT = macosx;
+				SWIFT_VERSION = 6.0;
+			};
+			name = Debug;
+		};
+		75CFD25772631229BE3A1FAD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
+				GENERATE_INFOPLIST_FILE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				PRODUCT_BUNDLE_IDENTIFIER = de.kevinchromik.MXBuddy.Tests;
+				SDKROOT = macosx;
+				SWIFT_VERSION = 6.0;
+			};
+			name = Release;
+		};
+		A92E223EBBA1E451240C8D63 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Manual;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = 7HFRDKKUCK;
+				ENABLE_HARDENED_RUNTIME = YES;
+				INFOPLIST_FILE = App/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				PRODUCT_BUNDLE_IDENTIFIER = de.kevinchromik.MXBuddy;
+				SDKROOT = macosx;
+				SWIFT_VERSION = 6.0;
+			};
+			name = Release;
+		};
+		DA5DE92F695804CD550693D9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
+				GENERATE_INFOPLIST_FILE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				PRODUCT_BUNDLE_IDENTIFIER = de.kevinchromik.MXBuddy.Tests;
+				SDKROOT = macosx;
+				SWIFT_VERSION = 6.0;
+			};
+			name = Debug;
+		};
+		F257C86B2E494A526A6DA4FE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		237C1698B36C5E6C72878FFC /* Build configuration list for PBXProject "MX Buddy" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3A97D9A14BC45702E5E136F5 /* Debug */,
+				F257C86B2E494A526A6DA4FE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		6CCB1A9203133DC233102297 /* Build configuration list for PBXNativeTarget "MX Buddy" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A92E223EBBA1E451240C8D63 /* Release */,
+				60AA45BE34473C781CA3B444 /* Debug */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		8D84698D32001EE8E2123A72 /* Build configuration list for PBXNativeTarget "MXBuddyTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				75CFD25772631229BE3A1FAD /* Release */,
+				DA5DE92F695804CD550693D9 /* Debug */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 78AA6BB13751DB0FB002136E /* Project object */;
+}
