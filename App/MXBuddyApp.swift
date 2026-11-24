@@ -45,6 +45,10 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         showWindow()
     }
 
+    func applicationDidBecomeActive(_ notification: Notification) {
+        MouseEngine.shared.refresh()
+    }
+
     @objc private func sleepNow() { MouseEngine.shared.sleep() }
     @objc private func wakeNow() { MouseEngine.shared.wake() }
     func applicationWillTerminate(_ notification: Notification) {

@@ -1,6 +1,8 @@
 import AppKit
 import ApplicationServices
 import IOKit.hid
+import IOKit.hidsystem
+import OSLog
 import Observation
 
 @MainActor @Observable
@@ -19,6 +21,8 @@ final class MouseEngine {
     private(set) var connected: Set<MouseModel> = []
     private(set) var diagnostics: [MouseModel: String] = [:]
     private(set) var tapFailed = false
+    private(set) var readyModels: Set<MouseModel> = []
+    private let log = Logger(subsystem: "de.kevinchromik.MXBuddy", category: "Mouse")
     var rescueAvailable = false
     @ObservationIgnored private var manager: IOHIDManager?
     @ObservationIgnored private var sessions: [UInt64: LogitechSession] = [:]
@@ -79,7 +83,7 @@ final class MouseEngine {
     }
 
     func permissions(listen: Bool) {
-        if listen { _ = CGRequestListenEventAccess() }
+        if listen { _ = IOHIDRequestAccess(kIOHIDRequestTypeListenEvent) }
         else { _ = AXIsProcessTrustedWithOptions(["AXTrustedCheckOptionPrompt": true] as CFDictionary) }
         let pane = listen ? "ListenEvent" : "Accessibility"
         if let url = URL(string: "x-apple.systempreferences:com.apple.preference.security?Privacy_" + pane) {
@@ -88,16 +92,21 @@ final class MouseEngine {
     }
 
     func refresh(force: Bool = false) {
-        accessibility = AXIsProcessTrusted()
-        monitoring = CGPreflightListenEventAccess()
-        let active = !paused && !sleeping && accessibility && monitoring
-        if force || (!active && (tap != nil || !sessions.isEmpty || tapFailed)) {
-            for id in Array(sessions.keys) { remove(id) }
-            removeTap()
-            retry = [:]
-            diagnostics = [:]
+        let trusted = AXIsProcessTrusted()
+        let hidAllowed = IOHIDCheckAccess(kIOHIDRequestTypeListenEvent) == kIOHIDAccessTypeGranted
+        if trusted != accessibility || hidAllowed != monitoring {
+            log.info("Access changed: accessibility=\(trusted), HID listen=\(hidAllowed)")
         }
-        if active && tap == nil { installTap() }
+        accessibility = trusted
+        monitoring = hidAllowed
+        let access = InputAccess(accessibility: trusted, monitoring: hidAllowed, suspended: paused || sleeping)
+        if force || !access.hidEnabled {
+            for id in Array(sessions.keys) { remove(id) }
+            retry.removeAll()
+            if !diagnostics.isEmpty { diagnostics.removeAll() }
+        }
+        if force || (!access.tapEnabled && (tap != nil || tapFailed)) { removeTap() }
+        if access.tapEnabled && tap == nil { installTap() }
         guard let manager else { return }
         let devices = IOHIDManagerCopyDevices(manager) as? Set<IOHIDDevice> ?? []
         var attached: Set<UInt64> = [], models: Set<MouseModel> = [], sources: [UInt64: MouseModel] = [:]
@@ -128,7 +137,7 @@ final class MouseEngine {
             }
             models.insert(model)
             attached.insert(id)
-            guard active, tap != nil else { continue }
+            guard access.hidEnabled else { continue }
             if sessions[id] == nil {
                 if let later = retry[id], later > Date() { continue }
                 guard IOHIDDeviceOpen(device, 0) == kIOReturnSuccess else {
@@ -140,8 +149,16 @@ final class MouseEngine {
                 sessions[id] = session
                 session.onInput = { [weak self] input in self?.perform(input, model) }
                 session.onStatus = { [weak self] message in
-                    self?.diagnostics[model] = message
-                    self?.retry[id] = message == nil ? nil : Date().addingTimeInterval(20)
+                    guard let self else { return }
+                    if let message {
+                        readyModels.remove(model)
+                        log.notice("Device setup: \(model.rawValue, privacy: .public) – \(message, privacy: .public)")
+                    } else {
+                        readyModels.insert(model)
+                        log.info("HID++ ready: \(model.rawValue, privacy: .public)")
+                    }
+                    diagnostics[model] = message
+                    retry[id] = message == nil ? nil : Date().addingTimeInterval(20)
                 }
                 session.configure(profiles)
             } else if let later = retry[id], later <= Date() {
@@ -161,6 +178,7 @@ final class MouseEngine {
 
     private func remove(_ id: UInt64) {
         guard let session = sessions.removeValue(forKey: id) else { return }
+        readyModels.remove(session.model)
         session.close()
         retry[id] = nil
         diagnostics[session.model] = nil
@@ -170,8 +188,7 @@ final class MouseEngine {
         let types: [CGEventType] = [.leftMouseDown, .leftMouseUp, .leftMouseDragged, .rightMouseDown,
             .rightMouseUp, .rightMouseDragged, .otherMouseDown, .otherMouseUp, .otherMouseDragged, .scrollWheel]
         let mask = types.reduce(UInt64(0)) { $0 | (1 << $1.rawValue) }
-        tap = CGEvent.tapCreate(tap: .cghidEventTap, place: .headInsertEventTap, options: .defaultTap,
-                               eventsOfInterest: mask, callback: { _, type, event, _ in
+        let callback: CGEventTapCallBack = { _, type, event, _ in
             let suppress = MainActor.assumeIsolated {
                 let engine = MouseEngine.shared
                 if type == .tapDisabledByTimeout || type == .tapDisabledByUserInput {
@@ -181,7 +198,12 @@ final class MouseEngine {
                 return engine.filter(type, event)
             }
             return suppress ? nil : Unmanaged.passUnretained(event)
-        }, userInfo: nil)
+        }
+        for location in [CGEventTapLocation.cghidEventTap, .cgSessionEventTap] {
+            tap = CGEvent.tapCreate(tap: location, place: .headInsertEventTap, options: .defaultTap,
+                                    eventsOfInterest: mask, callback: callback, userInfo: nil)
+            if tap != nil { break }
+        }
         tapFailed = tap == nil
         guard let tap else { return }
         source = CFMachPortCreateRunLoopSource(kCFAllocatorDefault, tap, 0)
@@ -201,25 +223,20 @@ final class MouseEngine {
     private func filter(_ type: CGEventType, _ event: CGEvent) -> Bool {
         // Quartz field 87 is the originating IORegistry service ID. Unknown sources pass through.
         let quartz = UInt64(bitPattern: event.getIntegerValueField(CGEventField(rawValue: 87)!))
-        let sender = quartz == 0 ? HIDSender.id(of: event) ?? 0 : quartz
+        let sender = senders[quartz] != nil ? quartz : HIDSender.id(of: event) ?? quartz
         return router.filter(type: type, event: event, sender: sender, sources: senders,
                              profiles: profiles, perform: perform)
     }
 
     private func perform(_ input: Input, _ model: MouseModel) {
         guard !paused, !sleeping else { return }
-        let code: CGKeyCode, flags: CGEventFlags
-        switch profiles[model, input] {
-        case .native: return
-        case .spaceLeft: code = 123; flags = .maskControl
-        case .spaceRight: code = 124; flags = .maskControl
-        case .missionControl: code = 126; flags = .maskControl
-        case .shortcut(let chord): code = chord.code; flags = CGEventFlags(rawValue: chord.flags)
-        }
+        let action = profiles[model, input]
+        let hotKeys = UserDefaults.standard.persistentDomain(forName: "com.apple.symbolichotkeys")?["AppleSymbolicHotKeys"] as? [String: Any] ?? [:]
+        guard let chord = action.systemChord(hotKeys) else { return }
         let source = CGEventSource(stateID: .privateState)
         for down in [true, false] {
-            let event = CGEvent(keyboardEventSource: source, virtualKey: code, keyDown: down)
-            event?.flags = flags
+            let event = CGEvent(keyboardEventSource: source, virtualKey: chord.code, keyDown: down)
+            event?.flags = CGEventFlags(rawValue: chord.flags)
             event?.post(tap: .cghidEventTap)
         }
     }

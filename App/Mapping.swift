@@ -101,3 +101,36 @@ struct GestureStroke {
         return y < 0 ? .gestureUp : .gestureDown
     }
 }
+
+/// A modifying Quartz tap needs Accessibility. Raw Logitech reports also need HID listen
+/// access, but their delivery does not depend on successfully installing a Quartz tap.
+struct InputAccess {
+    let accessibility: Bool
+    let monitoring: Bool
+    let suspended: Bool
+    var tapEnabled: Bool { accessibility && !suspended }
+    var hidEnabled: Bool { tapEnabled && monitoring }
+}
+
+extension Action {
+    /// Mission Control stores both the virtual key and all of its modifier bits.
+    /// Arrow shortcuts on macOS can include the secondary-function bit.
+    func systemChord(_ shortcuts: [String: Any]) -> Chord? {
+        let id: String, arrow: UInt16
+        switch self {
+        case .native: return nil
+        case .shortcut(let chord): return chord
+        case .spaceLeft: (id, arrow) = ("79", 123)
+        case .spaceRight: (id, arrow) = ("81", 124)
+        case .missionControl: (id, arrow) = ("32", 126)
+        }
+        let entry = shortcuts[id] as? [String: Any]
+        if entry?["enabled"] as? Bool == false { return nil }
+        if let value = entry?["value"] as? [String: Any], let parameters = value["parameters"] as? [Int],
+           parameters.count == 3, let code = UInt16(exactly: parameters[1]), code != UInt16.max,
+           let flags = UInt64(exactly: parameters[2]) {
+            return Chord(code: code, flags: flags, label: label)
+        }
+        return Chord(code: arrow, flags: (1 << 18) | (1 << 23), label: label)
+    }
+}

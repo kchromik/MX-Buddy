@@ -5,10 +5,10 @@ Native macOS-Menüleisten-App für die Logitech MX Master 3S und MX Master 4 üb
 ## Verwenden
 
 1. Die Maus über Bluetooth mit dem Mac verbinden und MX Buddy öffnen. Das Fenster zeigt Modell und Verbindungsstatus.
-2. Über „Freigeben“ die Bedienungshilfen und die Eingabeüberwachung für MX Buddy aktivieren. Falls macOS einen Neustart der App anfordert, MX Buddy erneut öffnen.
+2. Über „Systemeinstellungen öffnen“ die Bedienungshilfen und die Eingabeüberwachung für MX Buddy aktivieren. Fehlt die App in der Liste der Eingabeüberwachung, dort über **+** die installierte App hinzufügen. „Installierte App im Finder zeigen“ führt zur richtigen Kopie. Einen von macOS angeforderten Neustart der App bestätigen.
 3. Das Menü neben einem Bedienelement öffnen. Für „Eigenes Tastenkürzel“ die gewünschte Kombination drücken. Die Einstellungen gelten sofort und werden pro Modell gespeichert.
 
-„Space nach links/rechts“ sendet ⌃←/⌃→, „Mission Control“ sendet ⌃↑. Diese Kurzbefehle müssen unter **Systemeinstellungen → Tastatur → Tastaturkurzbefehle → Mission Control** aktiviert sein. Bei eigener Systembelegung die entsprechende Kombination aufnehmen.
+„Space nach links/rechts“ und „Mission Control“ verwenden die in macOS hinterlegten Tastenkürzel. Diese unter **Systemeinstellungen → Tastatur → Tastaturkurzbefehle → Mission Control** aktivieren.
 
 ## Tasten und Gesten
 
@@ -18,7 +18,7 @@ Für die Gestentaste lassen sich ein einfacher Druck und vier Bewegungsrichtunge
 
 Im Menüleistensymbol lassen sich alle Belegungen pausieren. **⌃⌥⇧R** stellt systemweit das native Verhalten beider Mäuse wieder her, auch für den Linksklick. Dieser Befehl entfernt die gespeicherten Belegungen, einschließlich des voreingestellten Space-Wechsels.
 
-Wenn Logi Options+ ein Bedienelement bereits übernimmt, zeigt MX Buddy den Konflikt an. Die betreffende Belegung in Options+ freigeben und in MX Buddy „Verbindung erneut prüfen“ wählen. Direkte Bluetooth-Verbindungen sind der unterstützte Gerätepfad. Ein Bolt-Empfänger benötigt eine andere Adressierung.
+Sendet die Maus bereits Logitech-Ereignisse für Options+, nutzt MX Buddy diese auch. Lösen beide Apps eine Aktion aus, die zusätzliche Aktion für das betreffende Bedienelement in Options+ deaktivieren. Direkte Bluetooth-Verbindungen sind der unterstützte Gerätepfad. Ein Bolt-Empfänger benötigt eine andere Adressierung.
 
 ## Entwicklung
 

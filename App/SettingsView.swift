@@ -15,7 +15,7 @@ struct SettingsView: View {
             HStack(alignment: .center) {
                 VStack(alignment: .leading, spacing: 3) {
                     Text("MX Buddy").font(.custom("Outfit", size: 34).weight(.medium))
-                    Text(engine.paused ? "Belegungen pausiert" : "Mausbelegungen").foregroundStyle(.secondary)
+                    Text(engine.paused ? "Belegungen pausiert" : (engine.readyModels.contains(engine.selected) ? "Sondertasten bereit" : "Mausbelegungen")).foregroundStyle(.secondary)
                 }
                 Spacer()
                 Button { engine.paused.toggle() } label: {
@@ -41,14 +41,21 @@ struct SettingsView: View {
                         VStack(alignment: .leading, spacing: 10) {
                             Label("Freigaben für Mausbelegungen", systemImage: "lock.open").font(.headline)
                             if !engine.accessibility { permission("Bedienungshilfen", listen: false) }
-                            if !engine.monitoring { permission("Eingabeüberwachung", listen: true) }
+                            if !engine.monitoring {
+                                permission("Eingabeüberwachung", listen: true)
+                                Text("Fehlt MX Buddy in der Liste? Klicke dort auf + und wähle diese App. Aktiviere den Schalter und bestätige „Beenden & erneut öffnen“, wenn macOS danach fragt.")
+                                    .font(.callout).foregroundStyle(.secondary)
+                                Button("Installierte App im Finder zeigen") {
+                                    NSWorkspace.shared.activateFileViewerSelecting([Bundle.main.bundleURL])
+                                }
+                            }
                         }.padding(14).frame(maxWidth: .infinity, alignment: .leading).background(surface, in: .rect(cornerRadius: 12))
                     }
                     if let warning = engine.diagnostics[engine.selected] {
                         Label(warning, systemImage: "exclamationmark.triangle").font(.callout)
                         Button("Verbindung erneut prüfen") { engine.refresh(force: true) }
                     }
-                    if engine.tapFailed { Text("Der Ereignisfilter ist inaktiv. Bitte prüfe die Freigaben und öffne MX Buddy erneut.") }
+                    if engine.tapFailed { Text("Klicks und Standard-Scrollereignisse können aktuell nicht umgelegt werden. Bitte prüfe die Bedienungshilfen.") }
                     group("Daumen", symbol: "hand.point.up.left") {
                         row(.thumbLeft)
                         row(.thumbRight)
@@ -87,7 +94,7 @@ struct SettingsView: View {
     }
 
     private func permission(_ name: String, listen: Bool) -> some View {
-        HStack { Text(name); Spacer(); Button("Freigeben …") { engine.permissions(listen: listen) } }
+        HStack { Text(name); Spacer(); Button("Systemeinstellungen öffnen …") { engine.permissions(listen: listen) } }
     }
     private func group<Content: View>(_ title: String, symbol: String, @ViewBuilder content: () -> Content) -> some View {
         VStack(alignment: .leading, spacing: 7) {

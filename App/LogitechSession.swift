@@ -17,12 +17,16 @@ final class LogitechSession {
     private var controlsIndex: UInt8 = 0, wheelIndex: UInt8 = 0
     private var controls: [UInt16: Bool] = [:] // divertible CID -> supports raw XY
     private var originals: [UInt16: UInt8] = [:]
+    // Diverted Logitech notifications are broadcast. Listen to existing streams
+    // without taking ownership of settings that another client must keep on exit.
+    private var sharedButtons: Set<UInt16> = []
+    private var addedRawXY: Set<UInt16> = []
+    private var sharedWheelInverted: Bool?
     private var wheelOriginal: [UInt8]?
     private var positiveLeft = true
     private var pressed: Set<UInt16> = []
     private var stroke = GestureStroke()
     private var wheel = WheelBurst()
-    private var issues: [String] = []
     var onInput: ((Input) -> Void)?
     var onStatus: ((String?) -> Void)?
 
@@ -56,11 +60,10 @@ final class LogitechSession {
                 }
                 while running {
                     let version = revision
-                    issues = []
                     try await apply()
                     if version == revision { break }
                 }
-                if running { onStatus?(issues.isEmpty ? nil : issues.joined(separator: " · ")) }
+                if running { onStatus?(nil) }
             } catch {
                 if running {
                     releaseControls()
@@ -82,33 +85,49 @@ final class LogitechSession {
             if wanted {
                 if originals[cid] == nil {
                     let status = try await request(controlsIndex, 2, prefix)
-                    guard status[2] & 0x05 == 0 else {
-                        issues.append("\(input.label) wird bereits von einer anderen Belegung verwendet.")
+                    if status[2] & 0x05 != 0 {
+                        sharedButtons.insert(cid)
+                        if raw && controls[cid] == true && status[2] & 0x10 == 0 {
+                            addedRawXY.insert(cid)
+                            _ = try await request(controlsIndex, 3, prefix + [0x30, 0, 0])
+                        } else if !raw && addedRawXY.contains(cid) {
+                            _ = try await request(controlsIndex, 3, prefix + [0x20, 0, 0])
+                            addedRawXY.remove(cid)
+                        }
                         continue
                     }
+                    sharedButtons.remove(cid)
                     originals[cid] = status[2]
                 }
                 let bits: UInt8 = controls[cid] == true ? (raw ? 0x33 : 0x23) : 0x03
                 _ = try await request(controlsIndex, 3, prefix + [bits, 0, 0])
-            } else if let original = originals[cid] {
-                _ = try await request(controlsIndex, 3, prefix + [restoreBits(cid, original), 0, 0])
-                originals[cid] = nil
+            } else {
+                sharedButtons.remove(cid)
+                if addedRawXY.contains(cid) {
+                    _ = try await request(controlsIndex, 3, prefix + [0x20, 0, 0])
+                    addedRawXY.remove(cid)
+                }
+                if let original = originals[cid] {
+                    _ = try await request(controlsIndex, 3, prefix + [restoreBits(cid, original), 0, 0])
+                    originals[cid] = nil
+                }
             }
         }
         guard wheelIndex != 0 else { return }
-        // With a native direction, leave horizontal scrolling with macOS and use the event tap.
-        let divert = profiles[model, .thumbLeft] != .native && profiles[model, .thumbRight] != .native
-        if divert && wheelOriginal == nil {
-            let status = try await request(wheelIndex, 1)
-            guard status[0] == 0 else {
-                issues.append("Das Daumenrad wird bereits von einer anderen Belegung verwendet.")
-                return
-            }
-            wheelOriginal = [status[0], status[1] & 1]
-            _ = try await request(wheelIndex, 2, [1, 0])
-        } else if !divert, let original = wheelOriginal {
+        let left = profiles[model, .thumbLeft] != .native
+        let right = profiles[model, .thumbRight] != .native
+        if !(left && right), let original = wheelOriginal {
             _ = try await request(wheelIndex, 2, original)
             wheelOriginal = nil
+        }
+        sharedWheelInverted = nil
+        guard (left || right) && wheelOriginal == nil else { return }
+        let status = try await request(wheelIndex, 1)
+        if status[0] == 1 {
+            sharedWheelInverted = status[1] & 1 != 0
+        } else if status[0] == 0 && left && right {
+            wheelOriginal = [status[0], status[1] & 1]
+            _ = try await request(wheelIndex, 2, [1, 0])
         }
     }
 
@@ -117,6 +136,12 @@ final class LogitechSession {
     }
 
     private func releaseControls() {
+        for cid in addedRawXY {
+            _ = send(controlsIndex, 0x3E, [UInt8(cid >> 8), UInt8(truncatingIfNeeded: cid), 0x20, 0, 0])
+        }
+        addedRawXY.removeAll()
+        sharedButtons.removeAll()
+        sharedWheelInverted = nil
         for (cid, original) in originals {
             _ = send(controlsIndex, 0x3E, [UInt8(cid >> 8), UInt8(truncatingIfNeeded: cid), restoreBits(cid, original), 0, 0])
         }
@@ -183,22 +208,23 @@ final class LogitechSession {
                 return
             }
         }
-        if wheelIndex != 0, index == wheelIndex, function == 0, wheelOriginal != nil {
+        if wheelIndex != 0, index == wheelIndex, function == 0, wheelOriginal != nil || sharedWheelInverted != nil {
             let delta = Int16(bitPattern: word(data, 0))
             guard delta != 0 else { return }
-            let input: Input = (delta > 0) == positiveLeft ? .thumbLeft : .thumbRight
+            let reportsPositiveLeft = positiveLeft != (sharedWheelInverted ?? false)
+            let input: Input = (delta > 0) == reportsPositiveLeft ? .thumbLeft : .thumbRight
             if wheel.begins(input, at: ProcessInfo.processInfo.systemUptime) { onInput?(input) }
         }
         guard controlsIndex != 0, index == controlsIndex else { return }
         if function == 0 {
-            let next = Set(stride(from: 0, to: 8, by: 2).map { word(data, $0) }.filter { originals[$0] != nil })
+            let next = Set(stride(from: 0, to: 8, by: 2).map { word(data, $0) }.filter { originals[$0] != nil || sharedButtons.contains($0) })
             for cid in next.subtracting(pressed) {
                 if cid == 0xC3 { stroke = GestureStroke() }
                 else if let input = Input.special[cid] { onInput?(input) }
             }
             if pressed.contains(0xC3), !next.contains(0xC3) { onInput?(stroke.input) }
             pressed = next
-        } else if function == 0x10, pressed.contains(0xC3) {
+        } else if function == 0x10, pressed.contains(0xC3), Input.directions.contains(where: { profiles[model, $0] != .native }) {
             stroke.move(dx: Int(Int16(bitPattern: word(data, 0))), dy: Int(Int16(bitPattern: word(data, 2))))
         }
     }
