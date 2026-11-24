@@ -11,15 +11,6 @@ struct SettingsView: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
-            HStack {
-                Text("MX Buddy").font(.custom("Outfit", size: 32).weight(.medium))
-                Spacer()
-                Button { engine.paused.toggle() } label: {
-                    Label(engine.paused ? "Fortsetzen" : "Pausieren", systemImage: engine.paused ? "play.fill" : "pause.fill")
-                }.controlSize(.small)
-            }
-            .padding(.horizontal, 26).padding(.top, 10).padding(.bottom, 18)
-            Divider()
             ScrollView {
                 VStack(alignment: .leading, spacing: 14) {
                     if !engine.accessibility || !engine.monitoring {
@@ -94,6 +85,10 @@ struct SettingsView: View {
             HStack(alignment: .center) {
                 LoginItemSetting()
                 Spacer()
+                Button { engine.paused.toggle() } label: {
+                    Label(engine.paused ? "Fortsetzen" : "Pausieren", systemImage: engine.paused ? "play.fill" : "pause.fill")
+                }.controlSize(.small)
+                Divider().frame(height: 16).padding(.horizontal, 4)
                 Button("Belegungen zurücksetzen …") { confirmReset = true }
                     .buttonStyle(.plain).font(.caption)
                     .help(engine.rescueAvailable ? "Beide Profile zurücksetzen (⌃⌥⇧R)" : "Beide Profile zurücksetzen")
@@ -127,52 +122,4 @@ struct SettingsView: View {
             .overlay { RoundedRectangle(cornerRadius: 16).strokeBorder(.primary.opacity(0.08)) }
     }
 
-}
-
-private struct RecorderSheet: View {
-    let input: Input
-    let save: (Action) -> Void
-    let cancel: () -> Void
-    var body: some View {
-        VStack(spacing: 14) {
-            Text(input.label).font(.title2)
-            Text("Drücke das gewünschte Tastenkürzel.").foregroundStyle(.secondary)
-            Recorder(save: { save(.shortcut($0)) }, cancel: cancel).frame(width: 1, height: 1)
-            Button("Abbrechen", action: cancel)
-        }.padding(30)
-    }
-}
-private struct Recorder: NSViewRepresentable {
-    let save: (Chord) -> Void
-    let cancel: () -> Void
-    func makeNSView(context: Context) -> KeyView { KeyView(save: save, cancel: cancel) }
-    func updateNSView(_ nsView: KeyView, context: Context) { }
-    final class KeyView: NSView {
-        let save: (Chord) -> Void, cancel: () -> Void
-        init(save: @escaping (Chord) -> Void, cancel: @escaping () -> Void) {
-            self.save = save; self.cancel = cancel
-            super.init(frame: .zero)
-        }
-        required init?(coder: NSCoder) { nil }
-        override var acceptsFirstResponder: Bool { true }
-        override func viewDidMoveToWindow() {
-            super.viewDidMoveToWindow()
-            DispatchQueue.main.async { [weak self] in self?.window?.makeFirstResponder(self) }
-        }
-        override func performKeyEquivalent(with event: NSEvent) -> Bool { keyDown(with: event); return true }
-        override func keyDown(with event: NSEvent) {
-            guard !event.isARepeat else { return }
-            let flags = event.modifierFlags.intersection([.command, .control, .option, .shift])
-            if event.keyCode == 53 && flags.isEmpty { cancel(); return }
-            let symbols: [(NSEvent.ModifierFlags, String)] = [(.control,"⌃"),(.option,"⌥"),(.shift,"⇧"),(.command,"⌘")]
-            let special: [UInt16: String] = [123:"←",124:"→",125:"↓",126:"↑",36:"↩",48:"⇥",49:"Leertaste",51:"⌫",53:"⎋"]
-            var key = special[event.keyCode] ?? event.charactersIgnoringModifiers?.uppercased() ?? ""
-            if let scalar = key.unicodeScalars.first, (0xF704...0xF726).contains(scalar.value) {
-                key = "F" + String(scalar.value - 0xF703)
-            }
-            if key.isEmpty { key = "Taste " + String(event.keyCode) }
-            save(Chord(code: event.keyCode, flags: UInt64(flags.rawValue),
-                       label: symbols.filter { flags.contains($0.0) }.map(\.1).joined() + key))
-        }
-    }
 }

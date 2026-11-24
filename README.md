@@ -6,7 +6,7 @@ Native macOS-Menüleisten-App für die Logitech MX Master 3S und MX Master 4 üb
 
 1. Die Maus über Bluetooth mit dem Mac verbinden und MX Buddy öffnen. Das Fenster zeigt Modell und Verbindungsstatus.
 2. Über „Systemeinstellungen öffnen“ die Bedienungshilfen und die Eingabeüberwachung für MX Buddy aktivieren. Fehlt die App in der Liste der Eingabeüberwachung, dort über **+** die installierte App hinzufügen. „Installierte App im Finder zeigen“ führt zur richtigen Kopie. Einen von macOS angeforderten Neustart der App bestätigen.
-3. In der Seitenansicht oder Draufsicht einen Punkt auf der Maus anklicken. Rechts die Aktion für die Taste oder Bewegungsrichtung auswählen. „Eigenes Tastenkürzel“ nimmt die gedrückte Kombination auf. Die Einstellungen gelten sofort und werden pro Modell gespeichert.
+3. In der Seitenansicht oder Draufsicht einen Punkt auf der Maus anklicken. Rechts die Aktion für die Taste oder Bewegungsrichtung auswählen. Bei „Eigenes Tastenkürzel“ eine Taste oder Kombination drücken, loslassen und die Vorschau mit „Übernehmen“ speichern. Eine einzeln gedrückte Befehlstaste, Wahltaste, Umschalttaste oder Control-Taste behält ihre linke oder rechte Seite. Die Einstellungen gelten sofort und werden pro Modell gespeichert.
 4. Mit **Bei der Anmeldung starten** MX Buddy als macOS-Anmeldeobjekt ein- oder ausschalten. Beim automatischen Start läuft die App in der Menüleiste. Das Einstellungsfenster lässt sich dort über „Belegungen öffnen“ aufrufen.
 
 „Space nach links/rechts“ und „Mission Control“ verwenden die in macOS hinterlegten Tastenkürzel. Diese unter **Systemeinstellungen → Tastatur → Tastaturkurzbefehle → Mission Control** aktivieren.

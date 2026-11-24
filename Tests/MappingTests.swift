@@ -204,3 +204,65 @@ final class RouterTests: XCTestCase {
         XCTAssertEqual(scroll.getIntegerValueField(.scrollWheelEventDeltaAxis2), 0)
     }
 }
+
+import AppKit
+import Carbon.HIToolbox
+import IOKit.hidsystem
+
+final class ShortcutCaptureTests: XCTestCase {
+    private func event(_ type: NSEvent.EventType, code: UInt16,
+                       flags: NSEvent.ModifierFlags = [], text: String = "") throws -> NSEvent {
+        try XCTUnwrap(NSEvent.keyEvent(with: type, location: .zero, modifierFlags: flags,
+                                      timestamp: 0, windowNumber: 0, context: nil, characters: text,
+                                      charactersIgnoringModifiers: text, isARepeat: false, keyCode: code))
+    }
+
+    func testStandaloneModifiersRetainSideThroughRecordingStorageAndPlayback() throws {
+        let keys: [(Int, String, NSEvent.ModifierFlags, Int32)] = [
+            (kVK_RightCommand, "⌘ rechts", .command, NX_DEVICERCMDKEYMASK),
+            (kVK_Command, "⌘ links", .command, NX_DEVICELCMDKEYMASK),
+            (kVK_RightOption, "⌥ rechts", .option, NX_DEVICERALTKEYMASK),
+            (kVK_Option, "⌥ links", .option, NX_DEVICELALTKEYMASK),
+            (kVK_RightShift, "⇧ rechts", .shift, NX_DEVICERSHIFTKEYMASK),
+            (kVK_Shift, "⇧ links", .shift, NX_DEVICELSHIFTKEYMASK),
+            (kVK_RightControl, "⌃ rechts", .control, NX_DEVICERCTLKEYMASK),
+            (kVK_Control, "⌃ links", .control, NX_DEVICELCTLKEYMASK)
+        ]
+        for (key, name, family, side) in keys {
+            var capture = ShortcutCapture()
+            let flags = NSEvent.ModifierFlags(rawValue: family.rawValue | UInt(side))
+            capture.handle(try event(.flagsChanged, code: UInt16(key), flags: flags))
+            XCTAssertNil(capture.captured)
+            capture.handle(try event(.flagsChanged, code: UInt16(key)))
+            let chord = try XCTUnwrap(capture.captured)
+            XCTAssertEqual(chord.label, name)
+            let decoded = try JSONDecoder().decode(Chord.self, from: JSONEncoder().encode(chord))
+            let pair = decoded.keyboardEvents(source: nil, physicalFlags: [])
+            XCTAssertEqual(pair.map(\.type), [.flagsChanged, .flagsChanged])
+            XCTAssertEqual(pair.map { $0.getIntegerValueField(.keyboardEventKeycode) }, [Int64(key), Int64(key)])
+            XCTAssertEqual(pair.map { $0.flags.rawValue }, [UInt64(flags.rawValue), 0])
+        }
+    }
+
+    func testModifierReleaseCannotReplaceRealChord() throws {
+        var capture = ShortcutCapture()
+        capture.handle(try event(.flagsChanged, code: 54, flags: .command))
+        capture.handle(try event(.keyDown, code: 40, flags: .command, text: "k"))
+        capture.handle(try event(.flagsChanged, code: 54))
+        capture.handle(try event(.keyUp, code: 40, text: "k"))
+        let chord = try XCTUnwrap(capture.captured)
+        XCTAssertEqual(chord.label, "⌘K")
+        XCTAssertEqual(chord.keyboardEvents(source: nil, physicalFlags: []).map(\.type), [.keyDown, .keyUp])
+    }
+
+    func testSingleLetterAndOppositeHeldModifier() throws {
+        var capture = ShortcutCapture()
+        capture.handle(try event(.keyDown, code: 40, text: "k"))
+        capture.handle(try event(.keyUp, code: 40, text: "k"))
+        XCTAssertEqual(capture.captured, Chord(code: 40, flags: 0, label: "K"))
+        let left = CGEventFlags(rawValue: CGEventFlags.maskCommand.rawValue | UInt64(NX_DEVICELCMDKEYMASK))
+        let chord = Chord(code: UInt16(kVK_RightCommand), flags: 0, label: "⌘ rechts")
+        let pair = chord.keyboardEvents(source: nil, physicalFlags: left)
+        XCTAssertEqual(pair.last?.flags, left)
+    }
+}

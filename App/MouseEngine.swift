@@ -234,10 +234,9 @@ final class MouseEngine {
         let hotKeys = UserDefaults.standard.persistentDomain(forName: "com.apple.symbolichotkeys")?["AppleSymbolicHotKeys"] as? [String: Any] ?? [:]
         guard let chord = action.systemChord(hotKeys) else { return }
         let source = CGEventSource(stateID: .privateState)
-        for down in [true, false] {
-            let event = CGEvent(keyboardEventSource: source, virtualKey: chord.code, keyDown: down)
-            event?.flags = CGEventFlags(rawValue: chord.flags)
-            event?.post(tap: .cghidEventTap)
+        let physical = CGEventSource.flagsState(.hidSystemState)
+        for event in chord.keyboardEvents(source: source, physicalFlags: physical) {
+            event.post(tap: .cghidEventTap)
         }
     }
 }

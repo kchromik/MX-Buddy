@@ -36,7 +36,11 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             guard GetEventParameter(event, EventParamName(kEventParamDirectObject), EventParamType(typeEventHotKeyID),
                                     nil, MemoryLayout<EventHotKeyID>.size, nil, &key) == noErr,
                   key.signature == 0x4D584255, key.id == 1 else { return OSStatus(eventNotHandledErr) }
-            MainActor.assumeIsolated { MouseEngine.shared.resetAll() }
+            MainActor.assumeIsolated {
+                // A chord attempted in the recorder must never reset the user's mappings.
+                guard NSApp.keyWindow?.sheetParent == nil else { return }
+                MouseEngine.shared.resetAll()
+            }
             return noErr
         }, 1, &type, nil, nil)
         let keyStatus = RegisterEventHotKey(UInt32(kVK_ANSI_R), UInt32(controlKey | optionKey | shiftKey),
