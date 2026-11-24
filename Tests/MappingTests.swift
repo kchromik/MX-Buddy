@@ -1,6 +1,19 @@
 import XCTest
 
 final class MappingTests: XCTestCase {
+    func testEverySupportedInputHasOnePlaceOnTheMouseDiagram() {
+        for model in MouseModel.allCases {
+            let inputs = MousePart.available(on: model).flatMap(\.inputs)
+            let expected = Input.allCases.filter { $0 != .panel || model == .four }
+            XCTAssertEqual(Set(inputs), Set(expected))
+            XCTAssertEqual(inputs.count, expected.count)
+            for part in MousePart.available(on: model) {
+                let point = part.point(on: model)
+                XCTAssertTrue((0...1).contains(point.x) && (0...1).contains(point.y))
+            }
+        }
+    }
+
     func testMouseTapCanStartWhileHIDPermissionIsPending() {
         let waiting = InputAccess(accessibility: true, monitoring: false, suspended: false)
         XCTAssertTrue(waiting.tapEnabled)

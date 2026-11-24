@@ -42,7 +42,10 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         let keyStatus = RegisterEventHotKey(UInt32(kVK_ANSI_R), UInt32(controlKey | optionKey | shiftKey),
                             EventHotKeyID(signature: 0x4D584255, id: 1), GetApplicationEventTarget(), 0, &rescueKey)
         MouseEngine.shared.rescueAvailable = keyStatus == noErr
-        showWindow()
+        let event = NSAppleEventManager.shared().currentAppleEvent
+        let loginLaunch = event?.eventID == kAEOpenApplication
+            && event?.paramDescriptor(forKeyword: AEKeyword(keyAEPropData))?.enumCodeValue == keyAELaunchedAsLogInItem
+        if !loginLaunch { showWindow() }
     }
 
     func applicationDidBecomeActive(_ notification: Notification) {
@@ -63,17 +66,17 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     func showWindow() {
         if window == nil {
             let view = SettingsView(engine: .shared)
-            let panel = NSWindow(contentRect: NSRect(x: 0, y: 0, width: 600, height: 660),
+            let panel = NSWindow(contentRect: NSRect(x: 0, y: 0, width: 888, height: 552),
                                  styleMask: [.titled, .closable, .miniaturizable, .resizable, .fullSizeContentView],
                                  backing: .buffered, defer: false)
             panel.title = "MX Buddy"
             panel.titleVisibility = .hidden
             panel.titlebarAppearsTransparent = true
             panel.isReleasedWhenClosed = false
-            panel.minSize = NSSize(width: 495, height: 440)
+            panel.minSize = NSSize(width: 760, height: 440)
             panel.contentView = NSHostingView(rootView: view)
-            panel.setFrameAutosaveName("MX Buddy Belegungen")
-            if !panel.setFrameUsingName("MX Buddy Belegungen") { panel.center() }
+            panel.setFrameAutosaveName("MX Buddy Mausansicht")
+            if !panel.setFrameUsingName("MX Buddy Mausansicht") { panel.center() }
             window = panel
         }
         NSApp.activate(ignoringOtherApps: true)

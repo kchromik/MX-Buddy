@@ -7,19 +7,27 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0F199C7A7411F24B2A388570 /* LoginItemSetting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EDB66F8DC37E3C4D3637BEC /* LoginItemSetting.swift */; };
 		174F728178766A4EBC8D11A7 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A9BE3B57BD77341E6E4A4E6 /* Cocoa.framework */; };
+		17607F295EBDDCF135C4A649 /* MouseDiagram.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF84A1DCF01A8B7088BC2C5B /* MouseDiagram.swift */; };
 		1A27A148DD77C29FFBC7B126 /* MouseEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4228F86B047783AF422D8623 /* MouseEngine.swift */; };
 		1D6148632E426B8AFA481B54 /* ReportTransport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 332D47D1AD8329FDAFCCBC5A /* ReportTransport.swift */; };
+		3CAA4562E7A433E1E5F50CDA /* BindingEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8EE8C2541A86AD8D18B79B2 /* BindingEditor.swift */; };
+		3F41ED76C11AB34D69DA492A /* mx-3s-side.png in Resources */ = {isa = PBXBuildFile; fileRef = 4F6155785334D72BC30DFB62 /* mx-3s-side.png */; };
 		41E702A7BBB7B658A5AE3731 /* MXBuddy.icns in Resources */ = {isa = PBXBuildFile; fileRef = 18CD44F48B3C062A7D4BA797 /* MXBuddy.icns */; };
 		536D99A9ED3ECAD6255644FD /* Mapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEEC852C814AE87F5F2644F2 /* Mapping.swift */; };
 		5CD337475F9D30E2BEE95C6D /* Outfit.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6D4FD4D4431025A6AEF71A49 /* Outfit.ttf */; };
 		772AF4739206EAE20BB613A4 /* ReportTransport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 332D47D1AD8329FDAFCCBC5A /* ReportTransport.swift */; };
+		775DF009CA692BEE9DCF1124 /* MouseDiagram.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF84A1DCF01A8B7088BC2C5B /* MouseDiagram.swift */; };
 		792B1F421F01792484B2A892 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A9BE3B57BD77341E6E4A4E6 /* Cocoa.framework */; };
 		83B794B83954E45412C0FA9B /* MXBuddyApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADC6C0974356743FA1E10F57 /* MXBuddyApp.swift */; };
 		887F340BA3691201A7451221 /* LogitechSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3A3CB7C94FAA7D792D8EA6B /* LogitechSession.swift */; };
 		95023C0A4D7C88BD64EDC58F /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48A3BE4F8A0540D567F597C0 /* SettingsView.swift */; };
 		9E4AF70DD62172E28BF82FA1 /* LogitechSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3A3CB7C94FAA7D792D8EA6B /* LogitechSession.swift */; };
+		C6F8D6EDA1E1686DA6D50D39 /* mx-4-top.png in Resources */ = {isa = PBXBuildFile; fileRef = 59939559930340E0381ED497 /* mx-4-top.png */; };
 		D17C8429DE6B3E053F68AC35 /* Mapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEEC852C814AE87F5F2644F2 /* Mapping.swift */; };
+		D388A1C52551347F6665B0F5 /* mx-4-side.png in Resources */ = {isa = PBXBuildFile; fileRef = DD7D18D4AFD7CFED3907CDC7 /* mx-4-side.png */; };
+		D80111D7E6D4DC2640761029 /* mx-3s-top.png in Resources */ = {isa = PBXBuildFile; fileRef = 916A0BDD12DF7C00AB69A06C /* mx-3s-top.png */; };
 		D961CFE93744B028D2374400 /* OFL.txt in Resources */ = {isa = PBXBuildFile; fileRef = CAB132CE579C3E7D070826F1 /* OFL.txt */; };
 		F5AC9746023A5DDA4E550CEF /* MouseEventRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9FADD476B6425627B1C44B0 /* MouseEventRouter.swift */; };
 		FD2FF626EFD31CDA1874A053 /* MappingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54E9F1675DFA53B31C727CE8 /* MappingTests.swift */; };
@@ -33,15 +41,22 @@
 		39618DB1449B6F7A72FA72A1 /* MX Buddy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "MX Buddy.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4228F86B047783AF422D8623 /* MouseEngine.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MouseEngine.swift; sourceTree = "<group>"; };
 		48A3BE4F8A0540D567F597C0 /* SettingsView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		4F6155785334D72BC30DFB62 /* mx-3s-side.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; path = "mx-3s-side.png"; sourceTree = "<group>"; };
 		54E9F1675DFA53B31C727CE8 /* MappingTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MappingTests.swift; sourceTree = "<group>"; };
+		59939559930340E0381ED497 /* mx-4-top.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; path = "mx-4-top.png"; sourceTree = "<group>"; };
 		6D4FD4D4431025A6AEF71A49 /* Outfit.ttf */ = {isa = PBXFileReference; includeInIndex = 1; path = Outfit.ttf; sourceTree = "<group>"; };
 		754DF05714046689C5601E28 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		7EDB66F8DC37E3C4D3637BEC /* LoginItemSetting.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = LoginItemSetting.swift; sourceTree = "<group>"; };
+		916A0BDD12DF7C00AB69A06C /* mx-3s-top.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; path = "mx-3s-top.png"; sourceTree = "<group>"; };
 		A635B9A1B65E9CCA4D71A997 /* MXBuddyTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MXBuddyTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		ADC6C0974356743FA1E10F57 /* MXBuddyApp.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MXBuddyApp.swift; sourceTree = "<group>"; };
 		AEEC852C814AE87F5F2644F2 /* Mapping.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Mapping.swift; sourceTree = "<group>"; };
 		CAB132CE579C3E7D070826F1 /* OFL.txt */ = {isa = PBXFileReference; includeInIndex = 1; path = OFL.txt; sourceTree = "<group>"; };
 		D9FADD476B6425627B1C44B0 /* MouseEventRouter.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MouseEventRouter.swift; sourceTree = "<group>"; };
+		DD7D18D4AFD7CFED3907CDC7 /* mx-4-side.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; path = "mx-4-side.png"; sourceTree = "<group>"; };
+		DF84A1DCF01A8B7088BC2C5B /* MouseDiagram.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MouseDiagram.swift; sourceTree = "<group>"; };
 		E3A3CB7C94FAA7D792D8EA6B /* LogitechSession.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = LogitechSession.swift; sourceTree = "<group>"; };
+		F8EE8C2541A86AD8D18B79B2 /* BindingEditor.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = BindingEditor.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,6 +100,9 @@
 				D93408F0BB9E52C86DE891A7 /* Resources */,
 				332D47D1AD8329FDAFCCBC5A /* ReportTransport.swift */,
 				D9FADD476B6425627B1C44B0 /* MouseEventRouter.swift */,
+				DF84A1DCF01A8B7088BC2C5B /* MouseDiagram.swift */,
+				7EDB66F8DC37E3C4D3637BEC /* LoginItemSetting.swift */,
+				F8EE8C2541A86AD8D18B79B2 /* BindingEditor.swift */,
 			);
 			name = App;
 			path = App;
@@ -131,6 +149,10 @@
 				CAB132CE579C3E7D070826F1 /* OFL.txt */,
 				6D4FD4D4431025A6AEF71A49 /* Outfit.ttf */,
 				18CD44F48B3C062A7D4BA797 /* MXBuddy.icns */,
+				4F6155785334D72BC30DFB62 /* mx-3s-side.png */,
+				916A0BDD12DF7C00AB69A06C /* mx-3s-top.png */,
+				DD7D18D4AFD7CFED3907CDC7 /* mx-4-side.png */,
+				59939559930340E0381ED497 /* mx-4-top.png */,
 			);
 			name = Resources;
 			path = Resources;
@@ -218,6 +240,10 @@
 				D961CFE93744B028D2374400 /* OFL.txt in Resources */,
 				5CD337475F9D30E2BEE95C6D /* Outfit.ttf in Resources */,
 				41E702A7BBB7B658A5AE3731 /* MXBuddy.icns in Resources */,
+				3F41ED76C11AB34D69DA492A /* mx-3s-side.png in Resources */,
+				D80111D7E6D4DC2640761029 /* mx-3s-top.png in Resources */,
+				D388A1C52551347F6665B0F5 /* mx-4-side.png in Resources */,
+				C6F8D6EDA1E1686DA6D50D39 /* mx-4-top.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -233,6 +259,7 @@
 				9E4AF70DD62172E28BF82FA1 /* LogitechSession.swift in Sources */,
 				1D6148632E426B8AFA481B54 /* ReportTransport.swift in Sources */,
 				F5AC9746023A5DDA4E550CEF /* MouseEventRouter.swift in Sources */,
+				17607F295EBDDCF135C4A649 /* MouseDiagram.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -247,6 +274,9 @@
 				95023C0A4D7C88BD64EDC58F /* SettingsView.swift in Sources */,
 				772AF4739206EAE20BB613A4 /* ReportTransport.swift in Sources */,
 				FE176BA0BF3EBEC60C9C26B8 /* MouseEventRouter.swift in Sources */,
+				775DF009CA692BEE9DCF1124 /* MouseDiagram.swift in Sources */,
+				0F199C7A7411F24B2A388570 /* LoginItemSetting.swift in Sources */,
+				3CAA4562E7A433E1E5F50CDA /* BindingEditor.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
